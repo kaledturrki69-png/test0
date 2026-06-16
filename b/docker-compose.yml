@@ -1,0 +1,77 @@
+services:
+  web:
+    container_name: jekjob-brain
+    hostname: jekjob-brain
+    build: .
+    env_file: .env
+    command: >
+      bash -lc "cd /code
+      && echo 'yes' | python3 manage.py makemigrations
+      && echo 'yes' | python3 manage.py migrate
+      && echo 'yes' | python3 manage.py createcachetable
+      && echo 'yes' | python3 manage.py collectstatic --noinput
+      && python3 manage.py shell -c 'import scripts.init_superusers as s; s.run()' 
+      python3 manage.py runserver 0.0.0.0:8000"
+    depends_on: [db, redis]
+    volumes:
+      - .:/code
+      - ./media/jobs:/code/media/jobs           # ★ same media path
+    ports: ["8001:8000"]
+    networks: [webserver_default]
+    environment:
+      DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: "0"
+      DJANGO_MEDIA_ROOT: /code/media      # ★ ensure the path
+
+  worker:
+    container_name: jekjob-brain-worker
+    build: .
+    env_file: .env
+    command: >
+      bash -lc "cd /code && celery -A main.celery worker -l info"
+    depends_on: [web, redis]
+    volumes:
+      - .:/code
+      - ./media:/code/media             # ★ same media path
+    networks: [webserver_default]
+    environment:
+      DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: "0"
+      DJANGO_MEDIA_ROOT: /code/media      # ★ ensure the path
+
+  beat:
+    container_name: jekjob-brain-beat
+    build: .
+    env_file: .env
+    command: >
+      bash -lc "cd /code && celery -A main.celery beat -l info"
+    depends_on: [web, redis]
+    volumes:
+      - .:/code
+      - ./media:/code/media           # ★ same media path
+    networks: [webserver_default]
+    environment:
+      DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: "0"
+      DJANGO_MEDIA_ROOT: /code/media      # ★ ensure the path
+
+  db:
+    container_name: jekjob-brain-db
+    image: pgvector/pgvector:0.8.1-pg16-trixie
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes: ["jekjob_pgdata:/var/lib/postgresql/data"]
+    networks: [webserver_default]
+    ports: ["5439:5432"]
+
+  redis:
+    container_name: jekjob-brain-redis
+    image: redis:7
+    networks: [webserver_default]
+
+volumes:
+  jekjob_pgdata:
+
+networks:
+  webserver_default:
+    external: true
+    name: "webserver_default"

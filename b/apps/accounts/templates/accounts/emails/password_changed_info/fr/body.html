@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Changed</title>
+  </head>
+  <body
+    style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f5f7fa;"
+  >
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+      <tr>
+        <td align="center" style="padding: 40px 0;">
+          <table
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            width="600"
+            style="
+              background-color: #ffffff;
+              border-radius: 10px;
+              overflow: hidden;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            "
+          >
+            <!-- Header -->
+            <tr>
+              <td
+                align="center"
+                style="background-color: #0ea5e9; padding: 20px;"
+              >
+                <h1
+                  style="
+                    color: #ffffff;
+                    font-size: 24px;
+                    margin: 0;
+                    font-weight: bold;
+                  "
+                >
+                  Kordoo.net
+                </h1>
+              </td>
+            </tr>
+
+            <!-- Body -->
+            <tr>
+              <td
+                style="
+                  padding: 40px 30px 30px 30px;
+                  color: #333333;
+                  font-size: 16px;
+                  line-height: 1.6;
+                "
+              >
+                <p>Hello <strong>{{ user.email }}</strong>,</p>
+
+                <p>
+                  This is a confirmation that your password was successfully changed.
+                </p>
+
+                <p style="margin-top: 20px;">
+                  If <strong>you made this change</strong>, no further action is required.
+                </p>
+
+                <p style="margin-top: 10px; color: #b91c1c;">
+                  If <strong>you did not request</strong> this password change, please reset your password immediately and contact our support team.
+                </p>
+
+                <p style="text-align: center; margin: 30px 0;">
+                  <a
+                    href="{{ FRONTEND_URL }}/{{ user.language|default:'en' }}/auth/forgot-password"
+                    style="
+                      display: inline-block;
+                      padding: 12px 24px;
+                      background-color: #0ea5e9;
+                      color: #ffffff;
+                      text-decoration: none;
+                      font-weight: bold;
+                      border-radius: 6px;
+                      font-size: 16px;
+                    "
+                    >Reset My Password</a
+                  >
+                </p>
+
+                <p>Thanks,<br />The Kordoo.net Team</p>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td
+                align="center"
+                style="
+                  background-color: #f9fafb;
+                  padding: 20px;
+                  font-size: 12px;
+                  color: #999999;
+                "
+              >
+                <p style="margin: 0;">
+                  © {{ now|date:"Y" }} Kordoo.net. All rights reserved.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

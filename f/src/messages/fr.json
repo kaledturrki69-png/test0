@@ -1,0 +1,14 @@
+{
+  "auth.title": "Authentification",
+  "auth.signIn": "Se connecter",
+  "auth.signUp": "S'inscrire",
+  "auth.email": "E-mail",
+  "auth.password": "Mot de passe",
+  "auth.name": "Nom",
+  "auth.continue": "Continuer avec l'e-mail",
+  "auth.signInButton": "Se connecter",
+  "auth.createAccount": "Créer un compte",
+  "auth.termsCaption": "En cliquant sur continuer, vous acceptez nos",
+  "auth.terms": "Conditions d’utilisation",
+  "auth.privacy": "Politique de confidentialité"
+}

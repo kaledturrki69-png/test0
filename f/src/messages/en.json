@@ -1,0 +1,14 @@
+{
+  "auth.title": "Authentication",
+  "auth.signIn": "Sign In",
+  "auth.signUp": "Sign Up",
+  "auth.email": "Email",
+  "auth.password": "Password",
+  "auth.name": "Name",
+  "auth.continue": "Continue With Email",
+  "auth.signInButton": "Sign In",
+  "auth.createAccount": "Create Account",
+  "auth.termsCaption": "By clicking continue, you agree to our",
+  "auth.terms": "Terms of Service",
+  "auth.privacy": "Privacy Policy"
+}

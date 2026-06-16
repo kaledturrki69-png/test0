@@ -1,0 +1,169 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["name", "email", "phone", "title", "summary", "linkedin", "location", "mobility", "education", "languages", "experience", "certifications"],
+  "properties": {
+    "name": { "type": "string" },
+    "email": { "type": "string", "format": "email" },
+    "phone": { "type": "string" },
+    "title": { "type": "string" },
+    "summary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["status", "summary"],
+        "properties": {
+          "status": { "type": "string" },
+          "summary": { "type": "string" }
+        }
+      }
+    },
+    "linkedin": { "type": "string" },
+    "location": { "type": "string" },
+    "mobility": { "type": "string" },
+    "education": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["school", "degrees", "location"],
+        "properties": {
+          "school": { "type": "string" },
+          "location": { "type": "string" },
+          "degrees": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["from", "to", "major", "degree", "status"],
+              "properties": {
+                "from": { "type": "string" },
+                "to": { "type": "string" },
+                "major": { "type": "string" },
+                "degree": { "type": "string" },
+                "status": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["language", "level", "status"],
+        "properties": {
+          "language": { "type": "string" },
+          "level": { "type": "string" },
+          "status": { "type": "string" }
+        }
+      }
+    },
+    "experience": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["company", "location", "positions", "status"],
+        "properties": {
+          "company": { "type": "string" },
+          "location": { "type": "string" },
+          "status": { "type": "string" },
+          "positions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["title", "from", "to", "status", "team", "skillsUsed", "responsibilities", "issuesAndResults"],
+              "properties": {
+                "title": { "type": "string" },
+                "from": { "type": "string" },
+                "to": { "type": "string" },
+                "status": { "type": "string" },
+                "team": {
+                  "type": "object",
+                  "properties": {
+                    "managed": { "type": "boolean" },
+                    "number": { "type": "integer" }
+                  },
+                  "additionalProperties": false
+                },
+                "skillsUsed": {
+                  "type": "object",
+                  "properties": {
+                    "technologies": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": ["name", "status", "version"],
+                        "properties": {
+                          "name": { "type": "string" },
+                          "status": { "type": "string" },
+                          "version": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                          }
+                        }
+                      }
+                    },
+                    "professionalSkills": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": ["name", "status"],
+                        "properties": {
+                          "name": { "type": "string" },
+                          "status": { "type": "string" }
+                        }
+                      }
+                    },
+                    "interpersonalSkills": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": ["name", "status"],
+                        "properties": {
+                          "name": { "type": "string" },
+                          "status": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                },
+                "responsibilities": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["description", "status"],
+                    "properties": {
+                      "description": { "type": "string" },
+                      "status": { "type": "string" }
+                    }
+                  }
+                },
+                "issuesAndResults": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "certifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "status", "institution"],
+        "properties": {
+          "name": { "type": "string" },
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "status": { "type": "string" },
+          "institution": { "type": "string" }
+        }
+      }
+    }
+  }
+}

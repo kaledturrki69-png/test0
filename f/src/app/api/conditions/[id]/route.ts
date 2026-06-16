@@ -1,0 +1,123 @@
+import { NextRequest, NextResponse } from 'next/server';
+import {
+  requireAuth,
+  fetchFromRemote,
+  createErrorResponse,
+  handleApiError
+} from '@/lib/api-route-helpers';
+import { API_ENDPOINTS } from '@/constants/api';
+
+// GET /api/conditions/[id] - Get a specific condition
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await requireAuth();
+    const { id } = await params;
+
+    const response = await fetchFromRemote(
+      API_ENDPOINTS.CONDITION_DETAIL(id),
+      session.accessToken
+    );
+
+    if (!response.ok) {
+      return createErrorResponse(response);
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    return handleApiError(error);
+  }
+}
+
+// PUT /api/conditions/[id] - Update a condition (full update)
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await requireAuth();
+    const { id } = await params;
+    const body = await request.json();
+
+    const response = await fetchFromRemote(
+      API_ENDPOINTS.CONDITION_DETAIL(id),
+      session.accessToken,
+      {
+        method: 'PUT',
+        body: JSON.stringify(body)
+      }
+    );
+
+    if (!response.ok) {
+      return createErrorResponse(response);
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data, { status: response.status });
+  } catch (error) {
+    return handleApiError(error);
+  }
+}
+
+// PATCH /api/conditions/[id] - Partially update a condition
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await requireAuth();
+    const { id } = await params;
+    const body = await request.json();
+
+    const response = await fetchFromRemote(
+      API_ENDPOINTS.CONDITION_DETAIL(id),
+      session.accessToken,
+      {
+        method: 'PATCH',
+        body: JSON.stringify(body)
+      }
+    );
+
+    if (!response.ok) {
+      return createErrorResponse(response);
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data, { status: response.status });
+  } catch (error) {
+    return handleApiError(error);
+  }
+}
+
+// DELETE /api/conditions/[id] - Delete a condition
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await requireAuth();
+    const { id } = await params;
+
+    const response = await fetchFromRemote(
+      API_ENDPOINTS.CONDITION_DETAIL(id),
+      session.accessToken,
+      {
+        method: 'DELETE'
+      }
+    );
+
+    if (!response.ok) {
+      return createErrorResponse(response);
+    }
+
+    if (response.status === 204) {
+      return new NextResponse(null, { status: 204 });
+    }
+    return NextResponse.json({ success: true }, { status: response.status });
+  } catch (error) {
+    return handleApiError(error);
+  }
+}

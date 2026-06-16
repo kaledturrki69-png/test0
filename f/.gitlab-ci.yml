@@ -1,0 +1,71 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  IMAGE_NAME: $CI_REGISTRY_IMAGE
+  DOCKER_TLS_CERTDIR: ''
+
+# -------------------------------
+# 1️⃣  BUILD & PUSH IMAGE
+# -------------------------------
+build:
+  stage: build
+  image: docker:27
+  services:
+    - docker:dind
+  script:
+    - echo "🔑 Logging into GitLab Container Registry"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - echo "🏗️ Building Next.js frontend image"
+    - docker build -t "$IMAGE_NAME:latest" .
+    - docker push "$IMAGE_NAME:latest"
+  only:
+    - main
+
+# -------------------------------
+# 2️⃣  DEPLOY TO HETZNER SERVER
+# -------------------------------
+deploy:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$DEPLOY_SSH_KEY2" > ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - ssh-keyscan -H jekjob.com >> ~/.ssh/known_hosts
+  script:
+    - |
+      echo "🔧 Preparing deploy metadata"
+      DEPLOY_COMMIT="$CI_COMMIT_SHORT_SHA"
+      DEPLOY_DATE="$CI_COMMIT_TIMESTAMP"
+      DEPLOY_AUTHOR="$CI_COMMIT_AUTHOR"
+      DEPLOY_BRANCH="$CI_COMMIT_REF_NAME"
+      DEPLOY_MESSAGE="$(echo "$CI_COMMIT_TITLE" | tr -d '\n')"
+
+      echo "🚀 Connecting to Hetzner and deploying"
+      ssh webdev@jekjob.com <<EOF
+      set -e
+      cd ~/production/projects/jekjob3/eyes
+
+      echo "📦 Pulling latest image"
+      echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+      docker-compose pull
+
+      echo "🧹 Updating deploy metadata"
+      sed -i '/^DEPLOY_/d' .env.production || true
+      echo "DEPLOY_COMMIT=${DEPLOY_COMMIT}" >> .env.production
+      echo "DEPLOY_DATE=${DEPLOY_DATE}" >> .env.production
+      echo "DEPLOY_AUTHOR=${DEPLOY_AUTHOR}" >> .env.production
+      echo "DEPLOY_BRANCH=${DEPLOY_BRANCH}" >> .env.production
+      echo "DEPLOY_MESSAGE=${DEPLOY_MESSAGE}" >> .env.production
+
+      echo "🚀 Restarting frontend container"
+      docker-compose up -d --remove-orphans
+
+      echo "🧼 Cleaning old images"
+      docker image prune -f
+      EOF
+  only:
+    - main

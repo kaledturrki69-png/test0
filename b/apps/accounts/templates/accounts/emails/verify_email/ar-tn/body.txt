@@ -1,0 +1,10 @@
+Hello {{ user.email }},
+
+Your verification code is {{ code }}.
+You can also verify directly by clicking this link:
+{{ FRONTEND_URL }}/{{ user.language|default:"en" }}/auth/verify?email={{ user.email|urlencode }}&code={{ code }}
+
+This code will expire in 10 minutes.
+
+Thanks,
+The Freeme team

@@ -1,0 +1,269 @@
+
+> next-shadcn-dashboard-starter@1.0.0 i18n:scan
+> node scripts/scan-i18n.mjs --root ./src
+
+⚠️  Found 173 potential non-translated strings across 45 file(s):
+
+src/i18n/components/ui/sidebar.tsx
+  src/i18n/components/ui/sidebar.tsx:293: Prop "title": Toggle Sidebar
+
+src/i18n/components/ui/wysiwyg-editor.tsx
+  src/i18n/components/ui/wysiwyg-editor.tsx:32: Prop "placeholder": Start typing...
+  src/i18n/components/ui/wysiwyg-editor.tsx:86: Prop "title": Bold
+  src/i18n/components/ui/wysiwyg-editor.tsx:94: Prop "title": Italic
+  src/i18n/components/ui/wysiwyg-editor.tsx:102: Prop "title": Underline
+  src/i18n/components/ui/wysiwyg-editor.tsx:114: Prop "title": Heading 1
+  src/i18n/components/ui/wysiwyg-editor.tsx:124: Prop "title": Heading 2
+  src/i18n/components/ui/wysiwyg-editor.tsx:134: Prop "title": Heading 3
+  src/i18n/components/ui/wysiwyg-editor.tsx:144: Prop "title": Bullet List
+  src/i18n/components/ui/wysiwyg-editor.tsx:152: Prop "title": Numbered List
+  src/i18n/components/ui/wysiwyg-editor.tsx:162: Prop "title": Quote
+  src/i18n/components/ui/wysiwyg-editor.tsx:170: Prop "title": Code Block
+
+src/i18n/components/ui/table/data-table-pagination.tsx
+  src/i18n/components/ui/table/data-table-pagination.tsx:71: Prop "aria-label": Go to first page
+  src/i18n/components/ui/table/data-table-pagination.tsx:81: Prop "aria-label": Go to previous page
+  src/i18n/components/ui/table/data-table-pagination.tsx:91: Prop "aria-label": Go to next page
+  src/i18n/components/ui/table/data-table-pagination.tsx:101: Prop "aria-label": Go to last page
+
+src/i18n/components/ui/table/data-table-slider-filter.tsx
+  src/i18n/components/ui/table/data-table-slider-filter.tsx:95: JSX text node: = min && numValue
+
+src/i18n/components/ui/table/data-table-toolbar.tsx
+  src/i18n/components/ui/table/data-table-toolbar.tsx:52: Prop "aria-label": Reset filters
+
+src/i18n/components/ui/table/data-table-view-options.tsx
+  src/i18n/components/ui/table/data-table-view-options.tsx:46: Prop "aria-label": Toggle columns
+
+src/i18n/components/modal/alert-modal.tsx
+  src/i18n/components/modal/alert-modal.tsx:31: Prop "title": Are you sure?
+  src/i18n/components/modal/alert-modal.tsx:32: Prop "description": This action cannot be undone.
+
+src/i18n/components/forms/demo-form.tsx
+  src/i18n/components/forms/demo-form.tsx:137: Prop "label": Full Name
+  src/i18n/components/forms/demo-form.tsx:138: Prop "placeholder": Enter your full name
+  src/i18n/components/forms/demo-form.tsx:146: Prop "label": Email Address
+  src/i18n/components/forms/demo-form.tsx:147: Prop "placeholder": Enter your email
+  src/i18n/components/forms/demo-form.tsx:155: Prop "label": Age
+  src/i18n/components/forms/demo-form.tsx:165: Prop "label": Password
+  src/i18n/components/forms/demo-form.tsx:166: Prop "placeholder": Enter your password
+  src/i18n/components/forms/demo-form.tsx:175: Prop "label": Bio
+  src/i18n/components/forms/demo-form.tsx:176: Prop "placeholder": Tell us about yourself...
+  src/i18n/components/forms/demo-form.tsx:177: Prop "description": A brief description about yourself
+  src/i18n/components/forms/demo-form.tsx:190: Prop "label": Country
+  src/i18n/components/forms/demo-form.tsx:191: Prop "placeholder": Select your country
+  src/i18n/components/forms/demo-form.tsx:200: Prop "label": Interests
+  src/i18n/components/forms/demo-form.tsx:201: Prop "description": Select all that apply
+  src/i18n/components/forms/demo-form.tsx:212: Prop "label": Gender
+  src/i18n/components/forms/demo-form.tsx:222: Prop "label": Subscribe to Newsletter
+  src/i18n/components/forms/demo-form.tsx:223: Prop "description": Receive updates about new features and products
+  src/i18n/components/forms/demo-form.tsx:230: Prop "label": Overall Rating
+  src/i18n/components/forms/demo-form.tsx:231: Prop "description": Rate your experience (0-10)
+  src/i18n/components/forms/demo-form.tsx:245: Prop "label": Birth Date
+  src/i18n/components/forms/demo-form.tsx:246: Prop "description": Your date of birth (optional)
+  src/i18n/components/forms/demo-form.tsx:258: Prop "description": Please read and accept our terms
+  src/i18n/components/forms/demo-form.tsx:266: Prop "label": Profile Picture
+  src/i18n/components/forms/demo-form.tsx:267: Prop "description": Upload a profile picture (optional)
+
+src/i18n/components/forms/form-date-picker.tsx
+  src/i18n/components/forms/form-date-picker.tsx:47: Prop "placeholder": Pick a date
+
+src/i18n/components/forms/form-select.tsx
+  src/i18n/components/forms/form-select.tsx:40: Prop "placeholder": Select an option
+
+src/features/products/components/product-form.tsx
+  src/features/products/components/product-form.tsx:29: JSX text node: files?.[0]?.size
+  src/features/products/components/product-form.tsx:87: Prop "label": Product Image
+  src/features/products/components/product-form.tsx:88: Prop "description": Upload a product image
+  src/features/products/components/product-form.tsx:99: Prop "label": Product Name
+  src/features/products/components/product-form.tsx:100: Prop "placeholder": Enter product name
+  src/features/products/components/product-form.tsx:107: Prop "label": Category
+  src/features/products/components/product-form.tsx:108: Prop "placeholder": Select category
+  src/features/products/components/product-form.tsx:133: Prop "label": Price
+  src/features/products/components/product-form.tsx:134: Prop "placeholder": Enter price
+  src/features/products/components/product-form.tsx:145: Prop "label": Description
+  src/features/products/components/product-form.tsx:146: Prop "placeholder": Enter product description
+
+src/features/products/components/product-tables/columns.tsx
+  src/features/products/components/product-tables/columns.tsx:34: Prop "alt": App
+  src/features/products/components/product-tables/columns.tsx:42: Prop "alt": Email
+  src/features/products/components/product-tables/columns.tsx:50: Prop "alt": Upload
+
+src/features/post-management/components/job-application-form.tsx
+  src/features/post-management/components/job-application-form.tsx:260: Prop "placeholder": Add extra information or details about your career path or special conditions...
+
+src/features/kanban/components/board-column.tsx
+  src/features/kanban/components/board-column.tsx:83: Curly string literal: ghost
+
+src/features/kanban/components/new-section-dialog.tsx
+  src/features/kanban/components/new-section-dialog.tsx:53: Prop "placeholder": Section title...
+
+src/features/kanban/components/new-task-dialog.tsx
+  src/features/kanban/components/new-task-dialog.tsx:55: Prop "placeholder": Todo title...
+  src/features/kanban/components/new-task-dialog.tsx:63: Prop "placeholder": Description...
+
+src/features/kanban/components/task-card.tsx
+  src/features/kanban/components/task-card.tsx:71: Curly string literal: ghost
+
+src/features/documents/components/document-search.tsx
+  src/features/documents/components/document-search.tsx:46: Prop "placeholder": Search by candidate name...
+
+src/features/auth/components/forgot-password-form.tsx
+  src/features/auth/components/forgot-password-form.tsx:76: Prop "label": Email
+  src/features/auth/components/forgot-password-form.tsx:77: Prop "placeholder": Enter your email
+
+src/features/auth/components/reset-password-form.tsx
+  src/features/auth/components/reset-password-form.tsx:79: Prop "label": Email
+  src/features/auth/components/reset-password-form.tsx:80: Prop "placeholder": Enter your email
+  src/features/auth/components/reset-password-form.tsx:86: Prop "label": Reset Code
+  src/features/auth/components/reset-password-form.tsx:87: Prop "placeholder": Enter the code from your email
+  src/features/auth/components/reset-password-form.tsx:94: Prop "label": New Password
+  src/features/auth/components/reset-password-form.tsx:95: Prop "placeholder": Enter your new password
+
+src/features/auth/components/sign-in-view.tsx
+  src/features/auth/components/sign-in-view.tsx:52: Prop "alt": Logo
+
+src/components/org-switcher.tsx
+  src/components/org-switcher.tsx:68: Prop "alt": Logo
+
+src/components/ui/command.tsx
+  src/components/ui/command.tsx:33: Prop "title": Command Palette
+  src/components/ui/command.tsx:34: Prop "description": Search for a command to run...
+
+src/components/ui/pagination.tsx
+  src/components/ui/pagination.tsx:15: Prop "aria-label": pagination
+  src/components/ui/pagination.tsx:74: Prop "aria-label": Go to previous page
+  src/components/ui/pagination.tsx:91: Prop "aria-label": Go to next page
+
+src/components/ui/sidebar.tsx
+  src/components/ui/sidebar.tsx:288: Prop "aria-label": Toggle Sidebar
+  src/components/ui/sidebar.tsx:291: Prop "title": Toggle Sidebar
+
+src/components/ui/wysiwyg-editor.tsx
+  src/components/ui/wysiwyg-editor.tsx:32: Prop "placeholder": Start typing...
+  src/components/ui/wysiwyg-editor.tsx:86: Prop "title": Bold
+  src/components/ui/wysiwyg-editor.tsx:94: Prop "title": Italic
+  src/components/ui/wysiwyg-editor.tsx:102: Prop "title": Underline
+  src/components/ui/wysiwyg-editor.tsx:114: Prop "title": Heading 1
+  src/components/ui/wysiwyg-editor.tsx:124: Prop "title": Heading 2
+  src/components/ui/wysiwyg-editor.tsx:134: Prop "title": Heading 3
+  src/components/ui/wysiwyg-editor.tsx:144: Prop "title": Bullet List
+  src/components/ui/wysiwyg-editor.tsx:152: Prop "title": Numbered List
+  src/components/ui/wysiwyg-editor.tsx:162: Prop "title": Quote
+  src/components/ui/wysiwyg-editor.tsx:170: Prop "title": Code Block
+
+src/components/ui/table/data-table-pagination.tsx
+  src/components/ui/table/data-table-pagination.tsx:71: Prop "aria-label": Go to first page
+  src/components/ui/table/data-table-pagination.tsx:81: Prop "aria-label": Go to previous page
+  src/components/ui/table/data-table-pagination.tsx:91: Prop "aria-label": Go to next page
+  src/components/ui/table/data-table-pagination.tsx:101: Prop "aria-label": Go to last page
+
+src/components/ui/table/data-table-slider-filter.tsx
+  src/components/ui/table/data-table-slider-filter.tsx:95: JSX text node: = min && numValue
+
+src/components/ui/table/data-table-toolbar.tsx
+  src/components/ui/table/data-table-toolbar.tsx:52: Prop "aria-label": Reset filters
+
+src/components/ui/table/data-table-view-options.tsx
+  src/components/ui/table/data-table-view-options.tsx:46: Prop "aria-label": Toggle columns
+
+src/components/modal/alert-modal.tsx
+  src/components/modal/alert-modal.tsx:31: Prop "title": Are you sure?
+  src/components/modal/alert-modal.tsx:32: Prop "description": This action cannot be undone.
+
+src/components/forms/demo-form.tsx
+  src/components/forms/demo-form.tsx:137: Prop "label": Full Name
+  src/components/forms/demo-form.tsx:138: Prop "placeholder": Enter your full name
+  src/components/forms/demo-form.tsx:146: Prop "label": Email Address
+  src/components/forms/demo-form.tsx:147: Prop "placeholder": Enter your email
+  src/components/forms/demo-form.tsx:155: Prop "label": Age
+  src/components/forms/demo-form.tsx:165: Prop "label": Password
+  src/components/forms/demo-form.tsx:166: Prop "placeholder": Enter your password
+  src/components/forms/demo-form.tsx:175: Prop "label": Bio
+  src/components/forms/demo-form.tsx:176: Prop "placeholder": Tell us about yourself...
+  src/components/forms/demo-form.tsx:177: Prop "description": A brief description about yourself
+  src/components/forms/demo-form.tsx:190: Prop "label": Country
+  src/components/forms/demo-form.tsx:191: Prop "placeholder": Select your country
+  src/components/forms/demo-form.tsx:200: Prop "label": Interests
+  src/components/forms/demo-form.tsx:201: Prop "description": Select all that apply
+  src/components/forms/demo-form.tsx:212: Prop "label": Gender
+  src/components/forms/demo-form.tsx:222: Prop "label": Subscribe to Newsletter
+  src/components/forms/demo-form.tsx:223: Prop "description": Receive updates about new features and products
+  src/components/forms/demo-form.tsx:230: Prop "label": Overall Rating
+  src/components/forms/demo-form.tsx:231: Prop "description": Rate your experience (0-10)
+  src/components/forms/demo-form.tsx:245: Prop "label": Birth Date
+  src/components/forms/demo-form.tsx:246: Prop "description": Your date of birth (optional)
+  src/components/forms/demo-form.tsx:258: Prop "description": Please read and accept our terms
+  src/components/forms/demo-form.tsx:266: Prop "label": Profile Picture
+  src/components/forms/demo-form.tsx:267: Prop "description": Upload a profile picture (optional)
+
+src/components/forms/form-date-picker.tsx
+  src/components/forms/form-date-picker.tsx:47: Prop "placeholder": Pick a date
+
+src/components/forms/form-select.tsx
+  src/components/forms/form-select.tsx:40: Prop "placeholder": Select an option
+
+src/app/[locale]/dashboard/soft-skills/page.tsx
+  src/app/[locale]/dashboard/soft-skills/page.tsx:311: Prop "placeholder": Nom de skill
+  src/app/[locale]/dashboard/soft-skills/page.tsx:318: Prop "placeholder": Description
+  src/app/[locale]/dashboard/soft-skills/page.tsx:624: Prop "title": Archive Soft Skill
+  src/app/[locale]/dashboard/soft-skills/page.tsx:625: Prop "description": Are you sure you want to archive this soft skill? This action cannot be undone.
+
+src/app/[locale]/dashboard/skills/page.tsx
+  src/app/[locale]/dashboard/skills/page.tsx:69: Prop "title": Skills Management
+  src/app/[locale]/dashboard/skills/page.tsx:70: Prop "description": Add Soft and Hard skills
+  src/app/[locale]/dashboard/skills/page.tsx:87: Prop "placeholder": Nom de skill
+  src/app/[locale]/dashboard/skills/page.tsx:92: Prop "placeholder": Description
+  src/app/[locale]/dashboard/skills/page.tsx:133: Prop "placeholder": Nom de skill
+  src/app/[locale]/dashboard/skills/page.tsx:138: Prop "placeholder": Description
+
+src/app/[locale]/dashboard/releases/page.tsx
+  src/app/[locale]/dashboard/releases/page.tsx:152: Prop "alt": JekJob Logo
+  src/app/[locale]/dashboard/releases/page.tsx:160: Prop "title": JekJob Releases
+  src/app/[locale]/dashboard/releases/page.tsx:161: Prop "description": Track all changes and improvements made to the platform
+  src/app/[locale]/dashboard/releases/page.tsx:224: Prop "alt": JekJob Logo
+
+src/app/[locale]/dashboard/recruting/page.tsx
+  src/app/[locale]/dashboard/recruting/page.tsx:422: Prop "placeholder": Type and select a position...
+  src/app/[locale]/dashboard/recruting/page.tsx:586: Prop "aria-label": Select all
+
+src/app/[locale]/dashboard/product/page.tsx
+  src/app/[locale]/dashboard/product/page.tsx:34: Prop "title": Upload CV
+  src/app/[locale]/dashboard/product/page.tsx:35: Prop "description": Upload your CV to the database.
+
+src/app/[locale]/dashboard/post-management/page.tsx
+  src/app/[locale]/dashboard/post-management/page.tsx:16: Prop "title": Post Management
+  src/app/[locale]/dashboard/post-management/page.tsx:17: Prop "description": Manage job postings and applications.
+
+src/app/[locale]/dashboard/positions/page.tsx
+  src/app/[locale]/dashboard/positions/page.tsx:1019: Prop "placeholder": Name
+  src/app/[locale]/dashboard/positions/page.tsx:1046: Prop "placeholder": Expected Hiring Date
+  src/app/[locale]/dashboard/positions/page.tsx:1072: Prop "placeholder": Number of positions to hire
+  src/app/[locale]/dashboard/positions/page.tsx:1084: Prop "placeholder": Number of CVs to shortlist
+  src/app/[locale]/dashboard/positions/page.tsx:1106: Prop "placeholder": Enter position description...
+  src/app/[locale]/dashboard/positions/page.tsx:1299: Prop "title": Archive Position
+  src/app/[locale]/dashboard/positions/page.tsx:1300: Prop "description": Are you sure you want to archive this position? This action cannot be undone.
+
+src/app/[locale]/dashboard/help/page.tsx
+  src/app/[locale]/dashboard/help/page.tsx:122: Prop "alt": Logo
+  src/app/[locale]/dashboard/help/page.tsx:129: Prop "title": Help Center
+  src/app/[locale]/dashboard/help/page.tsx:130: Prop "description": Find answers to common questions and get support
+  src/app/[locale]/dashboard/help/page.tsx:207: Prop "alt": JekJob Logo
+
+src/app/[locale]/dashboard/hard-skills/page.tsx
+  src/app/[locale]/dashboard/hard-skills/page.tsx:310: Prop "placeholder": Nom de skill
+  src/app/[locale]/dashboard/hard-skills/page.tsx:317: Prop "placeholder": Description
+  src/app/[locale]/dashboard/hard-skills/page.tsx:623: Prop "title": Archive Hard Skill
+  src/app/[locale]/dashboard/hard-skills/page.tsx:624: Prop "description": Are you sure you want to archive this hard skill? This action cannot be undone.
+
+src/app/[locale]/dashboard/conditions/page.tsx
+  src/app/[locale]/dashboard/conditions/page.tsx:321: Prop "placeholder": Name
+  src/app/[locale]/dashboard/conditions/page.tsx:328: Prop "placeholder": Description
+  src/app/[locale]/dashboard/conditions/page.tsx:335: Prop "placeholder": Formula
+  src/app/[locale]/dashboard/conditions/page.tsx:659: Prop "title": Archive Condition
+  src/app/[locale]/dashboard/conditions/page.tsx:660: Prop "description": Are you sure you want to archive this condition? This action cannot be undone.
+
+src/app/[locale]/dashboard/candidates/page.tsx
+  src/app/[locale]/dashboard/candidates/page.tsx:251: Prop "placeholder": Search candidates...
+  src/app/[locale]/dashboard/candidates/page.tsx:454: Prop "aria-label": Select all
+

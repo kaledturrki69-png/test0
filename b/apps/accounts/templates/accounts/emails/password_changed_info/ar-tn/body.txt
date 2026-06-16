@@ -1,0 +1,2 @@
+Hello {{ user.email }}, your password was successfully changed.
+If this wasn’t you, please contact support immediately.

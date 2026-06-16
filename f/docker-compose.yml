@@ -1,0 +1,15 @@
+services:
+  web:
+    build: .
+    container_name: jekjob_eyes_web
+    env_file: .env
+    restart: always
+    ports:
+      - '3000:3000'
+    networks:
+      - webserver_default
+
+networks:
+  webserver_default:
+    external: true
+    name: webserver_default

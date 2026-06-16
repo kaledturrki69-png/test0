@@ -1,0 +1,17 @@
+services:
+  web:
+    command: >
+      bash -lc "
+      cd /code &&
+      echo 'yes' | python3 manage.py makemigrations &&
+      echo 'yes' | python3 manage.py migrate &&
+      echo 'yes' | python3 manage.py collectstatic --noinput &&
+      python3 manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DJANGO_DEBUG=True
+    ports: ["8001:8000"]
+    volumes:
+      - .:/code
+      - ./media/jobs:/code/media/jobs
+      - ./static:/code/static
+      

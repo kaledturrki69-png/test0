@@ -1,0 +1,7 @@
+Hello {{ user.email }},
+We received a request to reset your password.
+
+Your code is {{ code }}.
+
+Or click below:
+{{ FRONTEND_URL }}/{{ user.language|default:'en' }}/auth/reset-password?email={{ user.email|urlencode }}&code={{ code }}

@@ -1,0 +1,371 @@
+{
+  "name": "Ines REJAB",
+  "email": "rejab.ines@gmail.com",
+  "phone": "+33 (0)6 52 63 59 40",
+  "title": "Chef de projet / PO & Business Analyst",
+  "summary": [
+    {
+      "status": "stated",
+      "summary": "Chef de projet technico-fonctionnel avec 7 ans d’expérience et un double diplôme d’ingénieur en informatique et en télécommunication. J’ai commencé en tant que développeuse web. Je me suis orientée par la suite vers le fonctionnel et l’accompagnement métier. J’occupe maintenant un poste de chef de projet chez France Télévisions et je pilote un parc d’applications (web, mobile, api…) depuis 3 ans."
+    }
+  ],
+  "linkedin": "www.ines-rejab.com",
+  "location": "Clamart (92)",
+  "mobility": "Stated as France",
+  "education": [
+    {
+      "school": "Télécom SudParis, France",
+      "degrees": [
+        {
+          "to": "2015",
+          "from_": "2015",
+          "major": "Intégration et Déploiement des Systèmes d’Information (DSI)",
+          "degree": "Diplôme d’ingénieur généraliste en télécommunication",
+          "status": "completed"
+        }
+      ],
+      "location": "France"
+    },
+    {
+      "school": "École Nationale des Sciences de l’Informatique",
+      "degrees": [
+        {
+          "to": "2013",
+          "from_": "2013",
+          "major": "Ingénierie du Logiciel et Systèmes d’Information",
+          "degree": "Diplôme d’ingénieur en informatique",
+          "status": "completed"
+        }
+      ],
+      "location": "Tunisie"
+    },
+    {
+      "school": "Institut Préparatoire Aux Études d'Ingénieurs – El Manar",
+      "degrees": [
+        {
+          "to": "2011",
+          "from_": "2011",
+          "major": "Mathématiques et Sciences Physiques",
+          "degree": "Diplôme des Études Universitaires de Premier Cycle (DEUPC)",
+          "status": "completed"
+        }
+      ],
+      "location": "Tunisie"
+    },
+    {
+      "school": "Lycée",
+      "degrees": [
+        {
+          "to": "2009",
+          "from_": "2009",
+          "major": "Mathématique",
+          "degree": "Baccalauréat",
+          "status": "completed"
+        }
+      ],
+      "location": "Tunisie"
+    }
+  ],
+  "languages": [
+    { "level": "Native", "status": "native", "language": "Arabe" },
+    { "level": "Bilingual", "status": "bilingual", "language": "Français" },
+    { "level": "Fluent (Toeic 850)", "status": "fluent", "language": "Anglais" }
+  ],
+  "experience": [
+    {
+      "status": "current",
+      "company": "France Télévisions",
+      "location": "Média",
+      "positions": [
+        {
+          "to": "Aujourd’hui",
+          "team": { "number": null, "managed": null },
+          "from_": "Février 2019",
+          "title": "Chef de projet / PO (MOE)",
+          "status": "",
+          "skillsUsed": {
+            "technologies": [
+              { "name": "TFS", "status": "used", "version": [] },
+              { "name": "JIRA", "status": "used", "version": [] },
+              { "name": "Confluence", "status": "used", "version": [] },
+              { "name": "Sciforma", "status": "used", "version": [] },
+              { "name": "ALM", "status": "used", "version": [] },
+              { "name": "UML", "status": "used", "version": [] },
+              { "name": "SQL Server", "status": "used", "version": [] },
+              { "name": "SoapUI", "status": "used", "version": [] },
+              { "name": "Postman", "status": "used", "version": [] }
+            ],
+            "professionalSkills": [],
+            "interpersonalSkills": []
+          },
+          "issuesAndResults": [
+            {
+              "result": "Experience in critical milestone projects",
+              "status": "success",
+              "description": "Implication dans une phase d'étude approfondie"
+            }
+          ],
+          "responsibilities": [
+            {
+              "status": "active",
+              "description": "Pilotage de plusieurs projets IT en méthodologies Agile/Cycle en V"
+            },
+            {
+              "status": "active",
+              "description": "Maintenance du parc applicatif des sports"
+            },
+            {
+              "status": "active",
+              "description": "Suivi de la mise en place de flux FranceTV - INA"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "status": "past",
+      "company": "Orpéa-Clinéa",
+      "location": "Services & Santé",
+      "positions": [
+        {
+          "to": "Février 2019",
+          "team": { "number": null, "managed": true },
+          "from_": "Septembre 2018",
+          "title": "Chef de projet (MOA)",
+          "status": "",
+          "skillsUsed": {
+            "technologies": [
+              { "name": "Oracle", "status": "used", "version": [] },
+              { "name": "TestLink", "status": "used", "version": [] },
+              { "name": "Mantis", "status": "used", "version": [] },
+              { "name": "Service Now", "status": "used", "version": [] },
+              { "name": "SQL", "status": "used", "version": [] }
+            ],
+            "professionalSkills": [],
+            "interpersonalSkills": []
+          },
+          "issuesAndResults": [
+            {
+              "result": "Successfully managed project",
+              "status": "success",
+              "description": "Client satisfaction on responsiveness and new functionalities"
+            }
+          ],
+          "responsibilities": [
+            {
+              "status": "completed",
+              "description": "Pilotage du projet maintenance systémes de gestion"
+            },
+            {
+              "status": "completed",
+              "description": "Organisation and animation of COPILs"
+            },
+            {
+              "status": "completed",
+              "description": "Suivi de l’avancement du projet et gestion d’une équipe de développement offshore."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "status": "past",
+      "company": "Klee conseil et intégration – Indigo/Dalkia",
+      "location": "Services",
+      "positions": [
+        {
+          "to": "Septembre 2018",
+          "team": { "number": null, "managed": null },
+          "from_": "Juin 2015",
+          "title": "Consultante fonctionnelle (MOE)",
+          "status": "",
+          "skillsUsed": {
+            "technologies": [
+              { "name": "C#", "status": "used", "version": [] },
+              { "name": "ASP .NET", "status": "used", "version": [] },
+              { "name": "WPF", "status": "used", "version": [] },
+              { "name": "TFS", "status": "used", "version": [] },
+              { "name": "Mantis", "status": "used", "version": [] },
+              { "name": "SQL", "status": "used", "version": [] },
+              { "name": "SQLServer", "status": "used", "version": [] },
+              { "name": "Sonar", "status": "used", "version": [] }
+            ],
+            "professionalSkills": [],
+            "interpersonalSkills": []
+          },
+          "issuesAndResults": [
+            {
+              "result": "Gained functional skills",
+              "status": "success",
+              "description": "Participation to specification and functional skill enhancement"
+            }
+          ],
+          "responsibilities": [
+            {
+              "status": "completed",
+              "description": "Consulting technico-fonctionnel"
+            },
+            {
+              "status": "completed",
+              "description": "Encadrement de nouveaux arrivants sur le projet."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "status": "past",
+      "company": "Sopra Steria – Douane",
+      "location": "Défense et Sécurité",
+      "positions": [
+        {
+          "to": "Décembre 2014",
+          "team": { "number": null, "managed": null },
+          "from_": "Juillet 2014",
+          "title": "Stage de fin d’études (MOE)",
+          "status": "",
+          "skillsUsed": {
+            "technologies": [
+              { "name": "Eclipse", "status": "used", "version": [] },
+              { "name": "Java", "status": "used", "version": [] },
+              { "name": "Swing", "status": "used", "version": [] },
+              { "name": "JSON", "status": "used", "version": [] },
+              { "name": "Protocol Buffers", "status": "used", "version": [] },
+              { "name": "Hibernate", "status": "used", "version": [] },
+              { "name": "REST", "status": "used", "version": [] },
+              { "name": "SVN", "status": "used", "version": [] },
+              { "name": "Tortoise", "status": "used", "version": [] },
+              { "name": "KM", "status": "used", "version": [] },
+              { "name": "UML", "status": "used", "version": [] }
+            ],
+            "professionalSkills": [],
+            "interpersonalSkills": []
+          },
+          "issuesAndResults": [
+            {
+              "result": "Positive feedback",
+              "status": "success",
+              "description": "Great client satisfaction with IHM mockups"
+            }
+          ],
+          "responsibilities": [
+            {
+              "status": "completed",
+              "description": "Réalisation d’une application éditeur tactique et messagerie instantanée"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "status": "past",
+      "company": "Various internships (MOE)",
+      "location": "",
+      "positions": [
+        {
+          "to": "Juin 2015",
+          "team": null,
+          "from_": "Février 2015",
+          "title": "Project intern at Centre Hospitalier Sud Francilien",
+          "status": "completed",
+          "skillsUsed": null,
+          "issuesAndResults": [
+            { "result": null, "status": null, "description": null }
+          ],
+          "responsibilities": [
+            {
+              "status": "completed",
+              "description": "Conseil client, rédaction des documents de spécification, maquettage, conception et réalisation d’une application de gestion de patients"
+            }
+          ]
+        },
+        {
+          "to": "Juin 2014",
+          "team": null,
+          "from_": "Avril 2014",
+          "title": "Stage étude et conseil at Solucom",
+          "status": "completed",
+          "skillsUsed": null,
+          "issuesAndResults": [
+            { "result": null, "status": null, "description": null }
+          ],
+          "responsibilities": [
+            {
+              "status": "completed",
+              "description": "Étude, conception et extension du prototype mobile NFC de RITM’X"
+            }
+          ]
+        },
+        {
+          "to": "Août 2013",
+          "team": null,
+          "from_": "Juin 2013",
+          "title": "Stage étude et développement at Intercom Consulting",
+          "status": "completed",
+          "skillsUsed": null,
+          "issuesAndResults": [
+            { "result": null, "status": null, "description": null }
+          ],
+          "responsibilities": [
+            {
+              "status": "completed",
+              "description": "Enrichissement des tableaux de bord de gestion des projets et des missions"
+            }
+          ]
+        },
+        {
+          "to": "Juin 2013",
+          "team": null,
+          "from_": "Février 2013",
+          "title": "Stage étude et développement at ENSI",
+          "status": "completed",
+          "skillsUsed": null,
+          "issuesAndResults": [
+            { "result": null, "status": null, "description": null }
+          ],
+          "responsibilities": [
+            {
+              "status": "completed",
+              "description": "Étude, conception et réalisation d’un site e-commerce"
+            }
+          ]
+        },
+        {
+          "to": "Août 2012",
+          "team": null,
+          "from_": "Juillet 2012",
+          "title": "Projet étude et développement at ENSI",
+          "status": "completed",
+          "skillsUsed": null,
+          "issuesAndResults": [
+            { "result": null, "status": null, "description": null }
+          ],
+          "responsibilities": [
+            {
+              "status": "completed",
+              "description": "Recueil du besoin, maquettage et spécification d’une application Android"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "to": null,
+      "url": null,
+      "name": "Formation en bureautique",
+      "from_": "2005",
+      "status": "Completed",
+      "institution": "ATFP"
+    },
+    {
+      "to": null,
+      "url": null,
+      "name": "Formation moniteur interne",
+      "from_": "2010",
+      "status": "Completed",
+      "institution": "ONET"
+    }
+  ]
+}

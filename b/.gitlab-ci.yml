@@ -1,0 +1,68 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  IMAGE_NAME: $CI_REGISTRY_IMAGE
+  DOCKER_TLS_CERTDIR: ""
+
+# 1️⃣ BUILD & PUSH IMAGE TO GITLAB CONTAINER REGISTRY
+build:
+  stage: build
+  image: docker:27
+  services:
+    - docker:dind
+  script:
+    - echo "🔑 Logging into GitLab Container Registry"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - echo "🏗️ Building backend image"
+    - docker build -t "$IMAGE_NAME:latest" .
+    - docker push "$IMAGE_NAME:latest"
+  only:
+    - main
+
+# 2️⃣ DEPLOY TO YOUR HETZNER SERVER
+deploy:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$DEPLOY_SSH_KEY" > ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - ssh-keyscan -H jekjob.com >> ~/.ssh/known_hosts
+  script:
+    - |
+      echo "🔧 Preparing deploy variables"
+      export DEPLOY_COMMIT="$CI_COMMIT_SHORT_SHA"
+      export DEPLOY_DATE="$CI_COMMIT_TIMESTAMP"
+      export DEPLOY_AUTHOR="$CI_COMMIT_AUTHOR"
+      export DEPLOY_BRANCH="$CI_COMMIT_REF_NAME"
+      export DEPLOY_MESSAGE="$(echo "$CI_COMMIT_TITLE" | tr -d '\n')"
+
+      echo "🚀 Connecting to Hetzner and deploying"
+      ssh webdev@jekjob.com << EOF
+        set -e
+        cd ~/production/projects/jekjob3/brain
+
+        echo "📦 Pulling latest image"
+        echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+        docker-compose pull web worker beat
+
+
+        echo "🧹 Updating deploy metadata"
+        sed -i '/^DEPLOY_/d' .env || true
+        echo "DEPLOY_COMMIT=$DEPLOY_COMMIT" >> .env
+        echo "DEPLOY_DATE=$DEPLOY_DATE" >> .env
+        echo "DEPLOY_AUTHOR=$DEPLOY_AUTHOR" >> .env
+        echo "DEPLOY_BRANCH=$DEPLOY_BRANCH" >> .env
+        echo "DEPLOY_MESSAGE=$DEPLOY_MESSAGE" >> .env
+
+        echo "🚀 Restarting containers"
+        docker-compose up -d web worker beat
+
+        echo "🧼 Cleaning old images"
+        docker image prune -f
+      EOF
+  only:
+    - main
