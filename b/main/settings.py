@@ -310,6 +310,13 @@ OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "").strip() or None
 OPENAI_CHAT_MODEL = os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-2024-08-06")
 OPENAI_EMBEDDING_MODEL = os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
 
+# Run Celery tasks inline in the web process (no separate worker/Redis broker).
+# Set CELERY_TASK_ALWAYS_EAGER=1 for a simple single-service deploy (e.g. Render
+# web service). Leave 0 and run a Celery worker + Redis broker to process tasks
+# in the background at scale.
+CELERY_TASK_ALWAYS_EAGER = os.getenv("CELERY_TASK_ALWAYS_EAGER", "0") == "1"
+CELERY_TASK_EAGER_PROPAGATES = False
+
 
 try:
     from .beat_schedule import CELERY_BEAT_SCHEDULE
