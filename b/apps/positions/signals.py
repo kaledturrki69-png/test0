@@ -27,6 +27,13 @@ def trigger_delayed_embedding(sender, instance, created, **kwargs):
       - Positions with no meaningful text
     """
 
+    # Skip when embeddings can't be produced or used: no OpenAI key, or a DB
+    # without pgvector (e.g. SQLite dev). This also prevents a failing embed task
+    # from re-saving + rescheduling under eager mode and stalling the request.
+    from django.db import connection
+    if not getattr(settings, "OPENAI_API_KEY", None) or connection.vendor != "postgresql":
+        return
+
     # Skip if currently embedding
     if instance.embedding_status == "pending":
         logger.debug(f"⏳ Position {instance.id} already pending embedding, skip scheduling.")

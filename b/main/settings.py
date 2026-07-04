@@ -27,7 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-secret")
-DEBUG = os.getenv("DJANGO_DEBUG", 0)
+# Coerce properly: "0"/"false"/"" -> False. (A bare string like "0" is truthy,
+# so os.getenv(...) alone would never disable DEBUG in production.)
+DEBUG = str(os.getenv("DJANGO_DEBUG", "0")).strip().lower() in ("1", "true", "yes", "on")
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
@@ -82,6 +84,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",  # must be before CommonMiddleware
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # serve static files in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     # "main.middleware.log_exceptions.LogBadRequestMiddleware",
@@ -301,9 +304,27 @@ CORS_ALLOW_METHODS = [
 STORAGE_ROOT = BASE_DIR / "storage"
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+# Optional OpenAI-compatible provider override (e.g. Google Gemini's
+# OpenAI-compatible endpoint). Leave OPENAI_BASE_URL empty to use OpenAI itself.
+OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "").strip() or None
+OPENAI_CHAT_MODEL = os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-2024-08-06")
+OPENAI_EMBEDDING_MODEL = os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
 
 
 try:
     from .beat_schedule import CELERY_BEAT_SCHEDULE
 except ImportError:
     CELERY_BEAT_SCHEDULE = {}
+
+
+# --- Production hardening (only when DEBUG is off) --------------------------
+# TLS is terminated at the reverse proxy, so trust its forwarded scheme and
+# mark cookies secure. Redirect/HSTS are opt-in via env once HTTPS is verified.
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = os.getenv("DJANGO_SECURE_SSL_REDIRECT", "0") == "1"
+    SECURE_HSTS_SECONDS = int(os.getenv("DJANGO_HSTS_SECONDS", "0"))
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True

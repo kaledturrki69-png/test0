@@ -174,7 +174,8 @@ export const columns: ColumnDef<Document>[] = [
     header: 'Uploaded',
     cell: ({ row }) => {
       const uploadedAt = row.getValue('uploaded_at') as string;
-      const date = new Date(uploadedAt);
+      const date = uploadedAt ? new Date(uploadedAt) : null;
+      const isValid = date && !Number.isNaN(date.getTime());
 
       // Use consistent formatting to avoid hydration mismatch
       const formatDate = (date: Date) => {
@@ -187,7 +188,9 @@ export const columns: ColumnDef<Document>[] = [
       };
 
       return (
-        <div className='text-muted-foreground text-sm'>{formatDate(date)}</div>
+        <div className='text-muted-foreground text-sm'>
+          {isValid ? formatDate(date) : '—'}
+        </div>
       );
     }
   },

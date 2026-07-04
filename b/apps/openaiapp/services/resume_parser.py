@@ -1,11 +1,18 @@
 import json
-import re
+import logging
 from pathlib import Path
 from json import JSONDecodeError
 from django.conf import settings
 from openai import OpenAI
 from .CandidateProfile import CandidateProfile
 DEFAULT_SCHEMA_VERSION = "1"
+
+logger = logging.getLogger(__name__)
+
+SYSTEM_PROMPT = (
+    "You are a professional multilingual résumé and curriculum vitae parser. "
+    "Extract structured candidate profile information."
+)
 
 
 def load_resume_schema(version: str = DEFAULT_SCHEMA_VERSION) -> dict:
@@ -21,52 +28,69 @@ def load_resume_schema(version: str = DEFAULT_SCHEMA_VERSION) -> dict:
         raise ValueError(f"Invalid JSON in schema file: {e.msg}")
 
 
-def build_prompt_with_schema(resume_text: str, schema_version: str = DEFAULT_SCHEMA_VERSION) -> str:
-    """
-    Build a structured prompt using the schema and template.
-    """
-    schema_json = json.dumps(load_resume_schema(schema_version), ensure_ascii=False, indent=2)
-    template_path = Path(__file__).resolve().parent.parent / "prompts" / "resume_prompt.txt"
-    if not template_path.exists():
-        raise FileNotFoundError(f"Prompt template not found at {template_path}")
-
-    template = template_path.read_text(encoding="utf-8")
-
-    prompt = (
-        template
-        .replace("{{schema_version}}", schema_version)
-        .replace("{{schema_json}}", schema_json)
-        .replace("{{resume_text}}", resume_text[:15000])
+def _client() -> OpenAI:
+    return OpenAI(
+        api_key=settings.OPENAI_API_KEY,
+        base_url=getattr(settings, "OPENAI_BASE_URL", None) or None,
     )
-    return prompt
 
 
-def parse_resume_text(resume_text: str, schema_version: str = DEFAULT_SCHEMA_VERSION) -> dict:
+def parse_resume_text(resume_text: str, schema_version: str = DEFAULT_SCHEMA_VERSION):
     """
-    Parse resume text into structured JSON following the provided schema.
+    Parse resume text into a structured CandidateProfile.
 
-    Uses the OpenAI Responses API (structured mode) with schema validation.
+    Works with OpenAI and any OpenAI-compatible provider (e.g. Google Gemini's
+    OpenAI-compatible endpoint) via `OPENAI_BASE_URL` / `OPENAI_CHAT_MODEL`.
+
+    Strategy:
+      1. Native structured parsing (`chat.completions.parse` with the Pydantic
+         schema) — best fidelity, used by OpenAI.
+      2. Fallback to JSON mode + manual validation — for providers that reject
+         the strict `$ref` JSON schema the parse helper generates.
+
+    Returns a validated `CandidateProfile` on success, or `{"error": ...}`.
     """
+    if not getattr(settings, "OPENAI_API_KEY", None):
+        return {"error": "OPENAI_API_KEY not configured"}
+
+    model = getattr(settings, "OPENAI_CHAT_MODEL", "gpt-4o-2024-08-06")
+    client = _client()
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": resume_text[:15000]},
+    ]
+
+    # 1) Preferred: native structured output.
     try:
-        #schema = load_resume_schema(schema_version)
-        
-        #prompt = build_prompt_with_schema(resume_text, schema_version)
-        client = OpenAI(api_key=settings.OPENAI_API_KEY)
-        print("********************")
-        print(resume_text[:200])
-        print("********************")
-        # ✅ Use Responses API with schema-guided parsing
-        response = client.responses.parse(
-            model="gpt-4o-2024-08-06",
-            input=[
-                {"role": "system", "content": "You are a professional multilingual résumé and curriculum vitae parser. Extract structured candidate profile information."},
-                {"role": "user", "content": resume_text},
-            ],
-            text_format=CandidateProfile,  # ← the schema defines the expected structure
+        completion = client.chat.completions.parse(
+            model=model, messages=messages, response_format=CandidateProfile
         )
-
-        # Try to get structured result
-        parsed  = response.output_parsed
-        return parsed
+        parsed = completion.choices[0].message.parsed
+        if parsed is not None:
+            return parsed
+        logger.warning("Structured parse returned no object; falling back to JSON mode.")
     except Exception as e:
+        logger.warning(f"Structured parse unavailable ({e}); falling back to JSON mode.")
+
+    # 2) Fallback: JSON mode + manual validation.
+    try:
+        schema = json.dumps(CandidateProfile.model_json_schema(), ensure_ascii=False)
+        json_prompt = (
+            "Extract the candidate profile from the résumé and return ONLY a JSON object "
+            "conforming to this JSON Schema. Use \"\" for unknown strings and [] for unknown "
+            f"lists; never omit required fields.\n\nSchema:\n{schema}\n\nRésumé:\n{resume_text[:15000]}"
+        )
+        completion = client.chat.completions.create(
+            model=model,
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": json_prompt},
+            ],
+            response_format={"type": "json_object"},
+            temperature=0,
+        )
+        data = json.loads(completion.choices[0].message.content)
+        return CandidateProfile.model_validate(data)
+    except Exception as e:
+        logger.exception("Resume parsing failed.")
         return {"error": str(e)}

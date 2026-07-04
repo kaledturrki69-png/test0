@@ -3,6 +3,28 @@
 from django.db import migrations
 
 
+# The pgvector ivfflat index is PostgreSQL-only. Guard it by DB vendor so the
+# same migration also applies cleanly on SQLite (local dev) as a no-op.
+# On PostgreSQL the behaviour is identical to the original RunSQL.
+def create_embedding_index(apps, schema_editor):
+    if schema_editor.connection.vendor != "postgresql":
+        return
+    schema_editor.execute(
+        """
+        CREATE INDEX IF NOT EXISTS resume_embedding_cosine_idx
+        ON candidates_resume
+        USING ivfflat (embedding vector_cosine_ops)
+        WITH (lists = 100);
+        """
+    )
+
+
+def drop_embedding_index(apps, schema_editor):
+    if schema_editor.connection.vendor != "postgresql":
+        return
+    schema_editor.execute("DROP INDEX IF EXISTS resume_embedding_cosine_idx;")
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -10,13 +32,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunSQL(
-            sql="""
-            CREATE INDEX IF NOT EXISTS resume_embedding_cosine_idx
-            ON candidates_resume
-            USING ivfflat (embedding vector_cosine_ops)
-            WITH (lists = 100);
-            """,
-            reverse_sql="DROP INDEX IF EXISTS resume_embedding_cosine_idx;"
-        ),
+        migrations.RunPython(create_embedding_index, drop_embedding_index),
     ]

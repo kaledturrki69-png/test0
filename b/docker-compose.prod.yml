@@ -1,0 +1,78 @@
+# Production compose for the Django backend.
+#
+#   docker compose -f docker-compose.prod.yml up -d --build
+#
+# Differences vs the dev docker-compose.yml:
+#   * gunicorn (WSGI) instead of `runserver`
+#   * runs `migrate` only (never `makemigrations` in production)
+#   * DEBUG off (from .env: DJANGO_DEBUG=0)
+#   * no source bind-mount — the built image is the source of truth
+#   * db/redis are NOT published to the host; only the web port is, bound to
+#     localhost for a reverse proxy (nginx/Caddy/Traefik) to sit in front.
+services:
+  web:
+    build: .
+    image: jekjob-brain:latest
+    restart: always
+    env_file: .env
+    command: >
+      bash -lc "cd /code
+      && python3 manage.py migrate --noinput
+      && python3 manage.py createcachetable
+      && python3 manage.py collectstatic --noinput
+      && python3 manage.py shell -c 'import scripts.init_superusers as s; s.run()'
+      && gunicorn main.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 120"
+    depends_on: [db, redis]
+    volumes:
+      - media:/code/media
+      - static:/code/static
+    ports:
+      - "127.0.0.1:8001:8000"   # reverse proxy forwards your API domain here
+    networks: [jekjob]
+
+  worker:
+    build: .
+    image: jekjob-brain:latest
+    restart: always
+    env_file: .env
+    command: bash -lc "cd /code && celery -A main.celery worker -l info"
+    depends_on: [web, redis]
+    volumes:
+      - media:/code/media
+    networks: [jekjob]
+
+  beat:
+    build: .
+    image: jekjob-brain:latest
+    restart: always
+    env_file: .env
+    command: bash -lc "cd /code && celery -A main.celery beat -l info"
+    depends_on: [web, redis]
+    volumes:
+      - media:/code/media
+    networks: [jekjob]
+
+  db:
+    image: pgvector/pgvector:0.8.1-pg16-trixie
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks: [jekjob]
+
+  redis:
+    image: redis:7
+    restart: always
+    networks: [jekjob]
+
+volumes:
+  pgdata:
+  media:
+  static:
+
+networks:
+  jekjob:
+    driver: bridge

@@ -1,7 +1,7 @@
 from celery import shared_task
 from pathlib import Path
 from django.conf import settings
-from django.db import transaction
+from django.db import transaction, connection
 from django.core.exceptions import ValidationError
 import fitz  # PyMuPDF
 
@@ -53,12 +53,14 @@ def process_document(self, document_id: int):
 
         # -------------------- 2️⃣ LLM parse (structured JSON) --------------------
         result = extract_resume_json(resume_text, schema_version=DEFAULT_SCHEMA_VERSION)
-        if "error" in result:
+        if isinstance(result, dict) and result.get("error"):
             raise ValueError(result["error"])
 
         # -------------------- 3️⃣ Parse with Pydantic model --------------------
+        # extract_resume_json already returns a validated CandidateProfile on
+        # success; only re-validate if we got a plain dict.
         try:
-            parsed = CandidateProfile.model_validate(result)
+            parsed = result if isinstance(result, CandidateProfile) else CandidateProfile.model_validate(result)
         except Exception as e:
             raise ValueError(f"Schema validation failed: {e}")
 
@@ -88,24 +90,28 @@ def process_document(self, document_id: int):
             )
 
             # -------------------- 5️⃣ Generate & store embedding --------------------
-            try:
-                resume_text_for_embedding = " ".join([
-                    parsed.name or "",
-                    " ".join(getattr(parsed, "skills", []) or []),
-                    " ".join(
-                        str(exp) for exp in (getattr(parsed, "experience", []) or [])
-                    ),
-                    getattr(parsed, "summary", "") or "",
-                ]).strip()
-                if resume_text_for_embedding:
-                    embedding = get_embedding(resume_text_for_embedding)
-                    if embedding:
-                        resume.embedding = embedding
-                        resume.save(update_fields=["embedding"])
-            except Exception as embed_err:
-                # Non-fatal: embedding failure doesn't block the upload
-                import logging
-                logging.getLogger(__name__).warning(f"Embedding failed for resume {resume.id}: {embed_err}")
+            # Embeddings are only usable for ranking with pgvector (PostgreSQL).
+            # Skip on other engines (e.g. SQLite dev) to avoid a wasted API call
+            # and a vector-dimension mismatch.
+            if connection.vendor == "postgresql":
+                try:
+                    resume_text_for_embedding = " ".join([
+                        parsed.name or "",
+                        " ".join(getattr(parsed, "skills", []) or []),
+                        " ".join(
+                            str(exp) for exp in (getattr(parsed, "experience", []) or [])
+                        ),
+                        getattr(parsed, "summary", "") or "",
+                    ]).strip()
+                    if resume_text_for_embedding:
+                        embedding = get_embedding(resume_text_for_embedding)
+                        if embedding:
+                            resume.embedding = embedding
+                            resume.save(update_fields=["embedding"])
+                except Exception as embed_err:
+                    # Non-fatal: embedding failure doesn't block the upload
+                    import logging
+                    logging.getLogger(__name__).warning(f"Embedding failed for resume {resume.id}: {embed_err}")
 
             doc.candidate = candidate
             doc.processing_progress = 100

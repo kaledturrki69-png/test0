@@ -173,11 +173,16 @@ export const candidatesColumns: ColumnDef<Document>[] = [
     size: 120,
     cell: ({ row }) => {
       const uploadedAt = row.getValue('uploaded_at') as string;
-      const date = new Date(uploadedAt);
+      const date = uploadedAt ? new Date(uploadedAt) : null;
+      const isValid = date && !Number.isNaN(date.getTime());
 
       return (
         <div className='text-muted-foreground text-sm whitespace-nowrap'>
-          <ReactTimeAgo date={date} locale='en' timeStyle='twitter' />
+          {isValid ? (
+            <ReactTimeAgo date={date} locale='en' timeStyle='twitter' />
+          ) : (
+            <span>—</span>
+          )}
         </div>
       );
     }
