@@ -1,0 +1,53 @@
+# Render Blueprint — deploys the Django backend (in b/) automatically.
+#
+# Usage: Render Dashboard -> New + -> Blueprint -> connect the finaltk repo.
+# Render reads this file, configures the service, and asks you to fill in the
+# values marked `sync: false` (your Supabase DB creds, Gemini key, admin login).
+#
+# Auto-deploy on every git push is ON by default once the repo is connected.
+services:
+  - type: web
+    name: jekjob-api
+    runtime: docker
+    rootDir: b
+    plan: free
+    dockerCommand: 'sh -c "python manage.py migrate --noinput && python manage.py collectstatic --noinput && (python manage.py createsuperuser --noinput || true) && gunicorn main.wsgi:application --bind 0.0.0.0:$PORT --workers 3 --timeout 120"'
+    healthCheckPath: /api/v1/docs/
+    envVars:
+      # --- Auto-set / safe defaults ---
+      - key: DJANGO_DEBUG
+        value: "0"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true        # Render generates a strong random secret
+      - key: DJANGO_ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: CELERY_TASK_ALWAYS_EAGER
+        value: "1"                 # run tasks inline; no Redis/worker needed
+      - key: OPENAI_BASE_URL
+        value: "https://generativelanguage.googleapis.com/v1beta/openai/"
+      - key: OPENAI_CHAT_MODEL
+        value: "gemini-2.5-flash"
+      - key: POSTGRES_PORT
+        value: "5432"
+      - key: DEFAULT_LANGUAGE
+        value: "fr"
+
+      # --- You fill these in the Render dashboard (kept out of git) ---
+      - key: POSTGRES_DB          # Supabase: usually "postgres"
+        sync: false
+      - key: POSTGRES_USER        # Supabase: postgres.<project-ref>
+        sync: false
+      - key: POSTGRES_PASSWORD    # Supabase database password
+        sync: false
+      - key: POSTGRES_HOST        # Supabase Session pooler host (IPv4)
+        sync: false
+      - key: OPENAI_API_KEY       # your Gemini key
+        sync: false
+      - key: DJANGO_SUPERUSER_EMAIL
+        sync: false
+      - key: DJANGO_SUPERUSER_PASSWORD
+        sync: false
+      - key: DJANGO_CORS_ALLOWED_ORIGINS   # your Vercel URL, e.g. https://finaltk.vercel.app
+        sync: false
+      - key: DJANGO_CSRF_TRUSTED_ORIGINS   # same Vercel URL
+        sync: false
