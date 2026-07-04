@@ -127,7 +127,7 @@ export default function AppSidebar() {
                                 asChild
                                 isActive={pathname === subItem.url}
                               >
-                                <Link href={{ pathname: subItem.url }}>
+                                <Link href={subItem.url as any}>
                                   <span>{subItem.title}</span>
                                 </Link>
                               </SidebarMenuSubButton>
@@ -147,7 +147,7 @@ export default function AppSidebar() {
                     tooltip={item.title}
                     isActive={pathname === item.url}
                   >
-                    <Link href={{ pathname: item.url }}>
+                    <Link href={item.url as any}>
                       <Icon />
                       <span>{item.title}</span>
                     </Link>

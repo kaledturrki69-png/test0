@@ -88,7 +88,7 @@ export function OrgSwitcher() {
                   alt='Logo'
                   width={20}
                   height={20}
-                  className='size-10'
+                  className='w-full h-full object-contain p-1'
                 />
               </div>
               <div className='flex flex-col gap-0.5 leading-none'>

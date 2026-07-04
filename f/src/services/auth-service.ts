@@ -28,22 +28,30 @@ export interface AuthResponse {
 }
 
 export const authService = {
-  // Login with Django API
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    const response = await apiClient.post(
-      '/api/v1/accounts/login/',
-      credentials
-    );
-    return response.data;
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const response = await fetch(`${baseUrl}/api/v1/accounts/login/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials)
+    });
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error('Django API Error:', response.status, errText);
+      throw new Error(`Login failed: ${response.status} ${errText}`);
+    }
+    return response.json();
   },
 
-  // Register with Django API
   async register(userData: RegisterData): Promise<AuthResponse> {
-    const response = await apiClient.post(
-      '/api/v1/accounts/register/',
-      userData
-    );
-    return response.data;
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const response = await fetch(`${baseUrl}/api/v1/accounts/register/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData)
+    });
+    if (!response.ok) throw new Error('Registration failed');
+    return response.json();
   },
 
   // Refresh token
